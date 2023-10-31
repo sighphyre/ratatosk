@@ -43,7 +43,12 @@ fn constraint_node(constraint: &Constraint) -> ExecutionNode {
 }
 
 fn strategy_node(strategy: &Strategy, segment_map: &HashMap<i32, Segment>) -> ExecutionNode {
-    let rule = upgrade_strategy(strategy, segment_map);
+    let strategy_without_constraints = Strategy {
+        constraints: None,
+        ..strategy.clone()
+    };
+
+    let rule = upgrade_strategy(&strategy_without_constraints, segment_map);
     let compiled_rule = compile_rule(rule.as_str()).expect("Failed to compile rule");
 
     let children = strategy

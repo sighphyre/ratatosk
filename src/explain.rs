@@ -45,6 +45,7 @@ impl Executable for ExecutionNode {
             children_enabled,
             children_result,
             node_type,
+            rule: self.rule.clone(),
         }
     }
 }
@@ -55,6 +56,7 @@ pub(crate) struct ExecutionResult {
     children_enabled: Option<bool>,
     children_result: Vec<ExecutionResult>,
     node_type: NodeType,
+    rule: String,
 }
 
 impl std::fmt::Debug for ExecutionNode {

@@ -79,9 +79,9 @@ mod test {
     #[test]
     fn does_the_thing() {
         let test_data = include_str!("../testdata/simple.json");
-        let (feature, segments) = destructure_feature("Feature.A", test_data);
+        let (feature, segments) = destructure_feature("F4.contains.inverted", test_data);
 
-        let context = EnrichedContext::from(Context::default(), "Feature.A".into());
+        let context = EnrichedContext::from(Context::default(), "F4.contains.inverted".into());
 
         let tree = build_execution_tree(&feature, &segments);
 

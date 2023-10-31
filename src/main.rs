@@ -9,8 +9,7 @@ use unleash_types::client_features::{
 };
 use unleash_yggdrasil::{
     state::EnrichedContext,
-    strategy_parsing::compile_rule,
-    strategy_upgrade::{upgrade, upgrade_constraint, upgrade_strategy},
+    strategy_upgrade::{upgrade_constraint, upgrade_strategy},
     Context,
 };
 
@@ -40,7 +39,7 @@ struct ExecutionNode {
 }
 
 fn constraint_node(constraint: &Constraint) -> ExecutionNode {
-    let rule = upgrade_constraint(constraint);
+    let _rule = upgrade_constraint(constraint);
     ExecutionNode {
         rule: "constraint".into(),
         children: vec![],
@@ -92,7 +91,7 @@ fn build_execution_tree(
     feature: &ClientFeature,
     segment_map: &HashMap<i32, Segment>,
 ) -> Vec<TraversalResult> {
-    let node = toggle_node(feature, segment_map);
+    let _node = toggle_node(feature, segment_map);
 
     let mut traversal_items: Vec<TraversalResult> = vec![];
 
@@ -109,7 +108,7 @@ fn build_execution_tree(
     }
 
     let base_context = Context::default();
-    let enriched_context = EnrichedContext::from(base_context, feature.name.clone());
+    let _enriched_context = EnrichedContext::from(base_context, feature.name.clone());
 
     for strategy in feature.strategies.clone().unwrap_or_default() {
         let strategy_without_constraints = Strategy {
@@ -122,7 +121,7 @@ fn build_execution_tree(
             fragment_type: FragmentType::Strategy,
         });
 
-        for constraint in strategy.constraints.unwrap_or_default() {}
+        for _constraint in strategy.constraints.unwrap_or_default() {}
     }
 
     traversal_items
@@ -159,7 +158,7 @@ fn main() {
 
     println!("Explanation: {:#?}", explanation);
 
-    let t = ExecutionNode {
+    let _t = ExecutionNode {
         rule: "true".into(),
         children: vec![ExecutionNode {
             rule: "false".into(),
@@ -168,7 +167,4 @@ fn main() {
         }],
         chaining: ChainType::None,
     };
-
-    // upgrade(&feature.strategies.unwrap_or(vec![]), &segment_map);
-    // println!("WHEEE")
 }

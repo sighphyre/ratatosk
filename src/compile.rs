@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use unleash_types::client_features::{ClientFeature, Constraint, Operator, Segment, Strategy};
 use unleash_yggdrasil::{
     strategy_parsing::{compile_rule, RuleFragment},
-    strategy_upgrade::{upgrade_constraint, upgrade_strategy},
+    // strategy_upgrade::{upgrade_constraint, upgrade_strategy},
 };
 
 trait PrettyPrintable {
@@ -95,7 +95,8 @@ pub(crate) struct ExecutionNode {
 }
 
 fn constraint_node(constraint: &Constraint) -> ExecutionNode {
-    let rule = upgrade_constraint(constraint);
+    // let rule = upgrade_constraint(constraint);
+    let rule: String = "this wont work".into();
     let compiled_rule = compile_rule(rule.as_str()).expect("Failed to compile rule");
     ExecutionNode {
         rule,
@@ -111,7 +112,8 @@ fn strategy_node(strategy: &Strategy, segment_map: &HashMap<i32, Segment>) -> Ex
         ..strategy.clone()
     };
 
-    let rule = upgrade_strategy(&strategy_without_constraints, segment_map);
+    // let rule = upgrade_strategy(&strategy_without_constraints, segment_map);
+    let rule: String = "this wont work".into();
     let compiled_rule = compile_rule(rule.as_str()).expect("Failed to compile rule");
 
     let children = strategy

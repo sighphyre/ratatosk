@@ -14,7 +14,7 @@ use unleash_types::client_features::{
 use unleash_yggdrasil::{
     state::EnrichedContext,
     strategy_parsing::{compile_rule, RuleFragment},
-    strategy_upgrade::{upgrade_constraint, upgrade_strategy},
+    // strategy_upgrade::{upgrade_constraint, upgrade_strategy},
 };
 
 fn main() {
@@ -48,7 +48,7 @@ mod test {
     use std::collections::HashMap;
 
     use unleash_types::client_features::{ClientFeature, ClientFeatures, Segment, Strategy};
-    use unleash_yggdrasil::strategy_parsing::parse_rule;
+    // use unleash_yggdrasil::strategy_parsing::parse_rule;
     use unleash_yggdrasil::{state::EnrichedContext, Context};
 
     use crate::{build_execution_tree, explain::Executable};

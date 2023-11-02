@@ -24,7 +24,7 @@ fn main() {
         .read_to_string(&mut input)
         .expect("Failed to read from stdin");
     let features =
-        serde_json::from_str::<ClientFeatures>(&input).expect("Failed to parse input as JSON");
+        serde_json::from_str::<ClientFeatures>(&input).expect("Failed to parse input");
 
     let feature = features
         .features
@@ -53,9 +53,9 @@ mod test {
 
     use crate::{build_execution_tree, explain::Executable};
     use pest::error::Error;
-use pest::iterators::{Pair, Pairs};
-use pest::pratt_parser::{Assoc, Op, PrattParser};
-use pest::Parser;
+    use pest::iterators::{Pair, Pairs};
+    use pest::pratt_parser::{Assoc, Op, PrattParser};
+    use pest::Parser;
 
     fn destructure_feature(
         feature_name: &str,

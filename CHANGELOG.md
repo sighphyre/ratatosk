@@ -2,6 +2,11 @@
 
 ## v0.1.0 (2023-11-02)
 
+<csr-id-adba9eb58cfd347510f821f00aa32c078001a332/>
+<csr-id-f7a78affaca1b549a07c16c073dad96612affc0b/>
+<csr-id-ae1d91cc92d0b419eb288d4e33f929a7dac51f4a/>
+<csr-id-7f390731b7a3fc47e4bad0e8b8c4bc24f2dfb1db/>
+
 ### Chore
 
  - <csr-id-adba9eb58cfd347510f821f00aa32c078001a332/> formatting for sanity
@@ -16,7 +21,7 @@
 
 <csr-read-only-do-not-edit/>
 
- - 12 commits contributed to the release.
+ - 14 commits contributed to the release.
  - 4 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -27,6 +32,8 @@
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Add license and description fields to cargo toml ([`507b21e`](https://github.com/sighphyre/ratatosk/commit/507b21eca5777f742cace6bcab018c4195fbe664))
+    - Release ratatoskr v0.1.0 ([`761075d`](https://github.com/sighphyre/ratatosk/commit/761075d8d86e1c691a25d2c22103f215d44663e5))
     - Empty changelog so smart release can fill it up ([`41834dc`](https://github.com/sighphyre/ratatosk/commit/41834dc2765bff6ad0156043d3722667c5353eaf))
     - Pluralizing thing is hard ([`558ce96`](https://github.com/sighphyre/ratatosk/commit/558ce962cf1cee79503c957ba2a86ed7738fc27c))
     - Make yaml yaml ([`0a0103e`](https://github.com/sighphyre/ratatosk/commit/0a0103e9fc1420a2031cfb26e06cc7686fe83dab))

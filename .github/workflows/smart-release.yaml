@@ -41,4 +41,3 @@ jobs:
       - name: Run release
         run: |
           cargo smart-release -u -b ${{ github.event.inputs.bump_version }} --allow-fully-generated-changelogs --no-changelog-preview --execute
-`

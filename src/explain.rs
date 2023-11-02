@@ -45,6 +45,7 @@ impl Executable for ExecutionNode {
             children_enabled,
             children_result,
             node_type,
+            node_name: self.metadata.friendly_name.clone(),
             rule: self.rule.clone(),
         }
     }
@@ -56,6 +57,7 @@ pub(crate) struct ExecutionResult {
     children_enabled: Option<bool>,
     children_result: Vec<ExecutionResult>,
     node_type: NodeType,
+    node_name: String,
     rule: String,
 }
 

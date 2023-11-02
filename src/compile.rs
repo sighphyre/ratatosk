@@ -1,10 +1,69 @@
 use std::collections::HashMap;
 
-use unleash_types::client_features::{ClientFeature, Constraint, Segment, Strategy};
+use unleash_types::client_features::{ClientFeature, Constraint, Operator, Segment, Strategy};
 use unleash_yggdrasil::{
     strategy_parsing::{compile_rule, RuleFragment},
     strategy_upgrade::{upgrade_constraint, upgrade_strategy},
 };
+
+trait PrettyPrintable {
+    fn pretty_print(&self) -> String;
+}
+
+impl PrettyPrintable for ClientFeature {
+    fn pretty_print(&self) -> String {
+        self.name.clone()
+    }
+}
+
+impl PrettyPrintable for Strategy {
+    fn pretty_print(&self) -> String {
+        camel_case_to_sentence(&self.name)
+    }
+}
+
+impl PrettyPrintable for Constraint {
+    fn pretty_print(&self) -> String {
+        match &self.operator {
+            Operator::NotIn => "Not in",
+            Operator::In => "In",
+            Operator::StrEndsWith => "Any string that ends with",
+            Operator::StrStartsWith => "Any string that starts with",
+            Operator::StrContains => "Any string that contains",
+            Operator::NumEq => "Number equals",
+            Operator::NumGt => "Number greater than",
+            Operator::NumGte => "Number greater than or equal to",
+            Operator::NumLt => "Number less than",
+            Operator::NumLte => "Number less than or equal to",
+            Operator::DateAfter => "Date after",
+            Operator::DateBefore => "Date before",
+            Operator::SemverEq => "Semver equals",
+            Operator::SemverLt => "Semver less than",
+            Operator::SemverGt => "Semver greater than",
+            Operator::Unknown(name) => name,
+        }
+        .into()
+    }
+}
+
+// I stole this from ChatGPT, it needs validation
+fn camel_case_to_sentence(s: &str) -> String {
+    let mut result = String::new();
+    let chars: Vec<char> = s.chars().collect();
+
+    for (i, c) in chars.iter().enumerate() {
+        if i == 0 {
+            result.push(c.to_uppercase().next().unwrap()); // Capitalize the first letter
+        } else if c.is_uppercase() {
+            result.push(' '); // Add a space before uppercase letters (but not the first one)
+            result.push(c.to_uppercase().next().unwrap());
+        } else {
+            result.push(*c);
+        }
+    }
+
+    result
+}
 
 #[derive(Debug, Clone)]
 pub(crate) enum NodeType {
@@ -16,11 +75,15 @@ pub(crate) enum NodeType {
 #[derive(Debug, Clone)]
 pub(crate) struct NodeMetaData {
     pub(crate) node_type: NodeType,
+    pub(crate) friendly_name: String,
 }
 
-impl From<NodeType> for NodeMetaData {
-    fn from(node_type: NodeType) -> Self {
-        NodeMetaData { node_type }
+impl NodeMetaData {
+    fn from(node_type: NodeType, name: &str) -> Self {
+        NodeMetaData {
+            node_type,
+            friendly_name: name.into(),
+        }
     }
 }
 
@@ -38,7 +101,7 @@ fn constraint_node(constraint: &Constraint) -> ExecutionNode {
         rule,
         compiled_rule,
         children: vec![],
-        metadata: NodeMetaData::from(NodeType::Constraint),
+        metadata: NodeMetaData::from(NodeType::Constraint, constraint.pretty_print().as_str()),
     }
 }
 
@@ -63,7 +126,7 @@ fn strategy_node(strategy: &Strategy, segment_map: &HashMap<i32, Segment>) -> Ex
         rule,
         compiled_rule,
         children,
-        metadata: NodeMetaData::from(NodeType::Strategy),
+        metadata: NodeMetaData::from(NodeType::Strategy, strategy.pretty_print().as_str()),
     }
 }
 
@@ -89,7 +152,7 @@ fn toggle_node(feature: &ClientFeature, segment_map: &HashMap<i32, Segment>) -> 
         rule,
         compiled_rule,
         children,
-        metadata: NodeMetaData::from(NodeType::Toggle),
+        metadata: NodeMetaData::from(NodeType::Toggle, feature.pretty_print().as_str()),
     }
 }
 

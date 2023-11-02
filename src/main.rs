@@ -47,10 +47,15 @@ fn main() {
 mod test {
     use std::collections::HashMap;
 
-    use unleash_types::client_features::{ClientFeature, ClientFeatures, Segment};
+    use unleash_types::client_features::{ClientFeature, ClientFeatures, Segment, Strategy};
+    use unleash_yggdrasil::strategy_parsing::parse_rule;
     use unleash_yggdrasil::{state::EnrichedContext, Context};
 
     use crate::{build_execution_tree, explain::Executable};
+    use pest::error::Error;
+use pest::iterators::{Pair, Pairs};
+use pest::pratt_parser::{Assoc, Op, PrattParser};
+use pest::Parser;
 
     fn destructure_feature(
         feature_name: &str,
@@ -78,6 +83,8 @@ mod test {
 
     #[test]
     fn does_the_thing() {
+        let rule = "user_id == 7 and session_id == 6";
+
         let test_data = include_str!("../testdata/simple.json");
         let (feature, segments) = destructure_feature("F4.contains.inverted", test_data);
 

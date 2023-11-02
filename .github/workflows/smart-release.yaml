@@ -1,6 +1,6 @@
 name: Run cargo smart-release
 permissions:
-  content: write
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

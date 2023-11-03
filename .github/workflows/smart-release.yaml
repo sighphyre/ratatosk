@@ -37,8 +37,8 @@ jobs:
           cache-on-failure: true
       - name: Install cargo smart-release
         run: |
-          cargo login --token ${{ secrets.CARGO_TOKEN }}
           cargo install cargo-smart-release
       - name: Run release
         run: |
+          cargo login ${{ secrets.CARGO_TOKEN }}
           cargo smart-release -u -b ${{ github.event.inputs.bump_version }} --no-changelog-preview --execute

@@ -41,4 +41,4 @@ jobs:
       - name: Run release
         run: |
           cargo login ${{ secrets.CARGO_TOKEN }}
-          cargo smart-release -u -b ${{ github.event.inputs.bump_version }} --no-changelog-preview --execute
+          cargo smart-release -u -b ${{ github.event.inputs.bump_version }} --no-changelog-preview --allow-fully-generated-changelogs --execute

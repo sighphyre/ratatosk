@@ -37,6 +37,7 @@ jobs:
           cache-on-failure: true
       - name: Install cargo smart-release
         run: |
+          cargo login --token ${{ secrets.CARGO_TOKEN }}
           cargo install cargo-smart-release
       - name: Run release
         run: |
